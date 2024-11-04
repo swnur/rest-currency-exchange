@@ -2,6 +2,10 @@ package com.swnur.dao;
 
 import com.swnur.DBConnectionManager;
 import com.swnur.entity.Currency;
+import com.swnur.exception.DBOperationException;
+import com.swnur.exception.EntityExistsException;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,19 +31,22 @@ public class CurrencyDAOImpl implements CurrencyDAO {
                 return Optional.of(getCurrency(resultSet));
             }
         } catch (SQLException e) {
-            // TODO: handle exception
+            throw new DBOperationException(
+                    String.format("Failed to find currency with code '%s' from the database.", code)
+            );
         }
 
         return Optional.empty();
     }
 
     @Override
-    public Optional<Currency> findByID(Long aLong) {
+    public Optional<Currency> findByID(Long id) {
         final String query = "SELECT * FROM Currencies WHERE id=?;";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -47,7 +54,9 @@ public class CurrencyDAOImpl implements CurrencyDAO {
             }
 
         } catch (SQLException e) {
-            // TODO: handle exception
+            throw new DBOperationException(
+                    String.format("Failed to find currency with id + '%d' from the database.", id)
+            );
         }
 
         return Optional.empty();
@@ -69,8 +78,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
             return currencies;
         } catch (SQLException e) {
-            // TODO: handle exception
-            return List.of();
+            throw new DBOperationException("Failed to find currencies from the database.");
         }
     }
 
@@ -88,15 +96,25 @@ public class CurrencyDAOImpl implements CurrencyDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (!resultSet.next()) {
-                throw new SQLException();
+                throw new DBOperationException(
+                        String.format("Failed to insert currency with code '%s' to the database.", entity.getCode())
+                );
             }
 
             return getCurrency(resultSet);
         } catch (SQLException e) {
-            // TODO: handle exception
+            if (e instanceof SQLiteException) {
+                SQLiteException sqLiteException = (SQLiteException) e;
+                if (sqLiteException.getResultCode().code == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE.code) {
+                    throw new EntityExistsException(
+                            String.format("Currency with code '%s' already exists.", entity.getCode())
+                    );
+                }
+            }
+            throw new DBOperationException(
+                    String.format("Failed to insert currency with code '%s' to the database.", entity.getCode())
+            );
         }
-
-        return null;
     }
 
     @Override
@@ -117,23 +135,27 @@ public class CurrencyDAOImpl implements CurrencyDAO {
                 return Optional.of(getCurrency(resultSet));
             }
         } catch (SQLException e) {
-            // TODO: handle exception
+            throw new DBOperationException(
+                    String.format("Failed to update currency with id '%d' from the database.", entity.getId())
+            );
         }
 
         return Optional.empty();
     }
 
     @Override
-    public void delete(Long aLong) {
+    public void delete(Long id) {
         final String query = "DELETE FROM Currencies WHERE id = ?";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setLong(1, aLong);
+            preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // TODO: handle exception
+            throw new DBOperationException(
+                    String.format("Failed to delete currency with id '%d' from the database.", id)
+            );
         }
     }
 
