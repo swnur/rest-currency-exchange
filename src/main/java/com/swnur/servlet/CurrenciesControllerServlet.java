@@ -39,11 +39,13 @@ public class CurrenciesControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String name = req.getParameter("name");
         String code = req.getParameter("code");
+        String name = req.getParameter("name");
         String sign = req.getParameter("sign");
 
-        CurrencyRequestDTO currencyRequestDto = new CurrencyRequestDTO(name, code, sign);
+        System.out.println(name + " " + code + " " + sign);
+
+        CurrencyRequestDTO currencyRequestDto = new CurrencyRequestDTO(code, name, sign);
 
         ValidationUtils.validate(currencyRequestDto);
 
