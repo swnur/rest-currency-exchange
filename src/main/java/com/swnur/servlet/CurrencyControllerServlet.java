@@ -7,7 +7,6 @@ import com.swnur.entity.Currency;
 import com.swnur.exception.NotFoundException;
 import com.swnur.utils.MappingUtils;
 import com.swnur.utils.ValidationUtils;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

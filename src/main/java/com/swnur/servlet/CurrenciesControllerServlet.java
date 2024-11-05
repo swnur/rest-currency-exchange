@@ -27,7 +27,7 @@ public class CurrenciesControllerServlet extends HttpServlet {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Currency> currencies = currencyDao.findAll();
 
         List<CurrencyResponseDTO> currenciesDto = currencies.stream()
@@ -38,7 +38,7 @@ public class CurrenciesControllerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code = req.getParameter("code");
         String name = req.getParameter("name");
         String sign = req.getParameter("sign");
