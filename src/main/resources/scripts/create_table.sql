@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Currencies
+CREATE TABLE IF NOT EXISTS currency
 (
     id        INTEGER PRIMARY KEY AUTOINCREMENT,
     code      TEXT CHECK ( length(code) == 3) NOT NULL,
@@ -7,13 +7,13 @@ CREATE TABLE IF NOT EXISTS Currencies
     CONSTRAINT currencies_unique_code UNIQUE (code)
 );
 
-CREATE TABLE IF NOT EXISTS ExchangeRates
+CREATE TABLE IF NOT EXISTS exchange_rate
 (
     id                 INTEGER PRIMARY KEY AUTOINCREMENT,
     base_currency_id   INTEGER NOT NULL,
     target_currency_id INTEGER NOT NULL,
     rate               REAL NOT NULL,
-    FOREIGN KEY (base_currency_id) REFERENCES Currencies(id) ON DELETE CASCADE,
-    FOREIGN KEY (target_currency_id) REFERENCES Currencies(id) ON DELETE CASCADE,
+    FOREIGN KEY (base_currency_id) REFERENCES currency(id) ON DELETE CASCADE,
+    FOREIGN KEY (target_currency_id) REFERENCES currency(id) ON DELETE CASCADE,
     CONSTRAINT exchange_rates_unique_currency_ids UNIQUE (base_currency_id, target_currency_id)
 );

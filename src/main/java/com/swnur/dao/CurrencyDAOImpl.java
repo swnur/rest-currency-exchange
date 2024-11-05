@@ -19,7 +19,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
     @Override
     public Optional<Currency> findByCode(String code) {
-        final String query = "SELECT * FROM Currencies where code=?;";
+        final String query = "SELECT * FROM currency where code=?;";
 
         try (Connection connection = DBConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -41,7 +41,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
     @Override
     public Optional<Currency> findByID(Long id) {
-        final String query = "SELECT * FROM Currencies WHERE id=?;";
+        final String query = "SELECT * FROM currency WHERE id=?;";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -64,7 +64,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
     @Override
     public List<Currency> findAll() {
-        final String query = "SELECT * FROM Currencies;";
+        final String query = "SELECT * FROM currency;";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -84,7 +84,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
     @Override
     public Currency insert(Currency entity) {
-        final String query = "INSERT INTO Currencies (code, full_name, sign) VALUES (?, ?, ?) RETURNING *";
+        final String query = "INSERT INTO currency (code, full_name, sign) VALUES (?, ?, ?) RETURNING *";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -119,7 +119,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
     @Override
     public Optional<Currency> update(Currency entity) {
-        final String query = "UPDATE Currencies SET (code, full_name, sign) = (?, ?, ?) WHERE id = ? RETURNING *";
+        final String query = "UPDATE currency SET (code, full_name, sign) = (?, ?, ?) WHERE id = ? RETURNING *";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -145,7 +145,7 @@ public class CurrencyDAOImpl implements CurrencyDAO {
 
     @Override
     public void delete(Long id) {
-        final String query = "DELETE FROM Currencies WHERE id = ?";
+        final String query = "DELETE FROM currency WHERE id = ?";
 
         try (Connection connection = DBConnectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
