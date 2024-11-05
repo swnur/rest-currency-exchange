@@ -13,8 +13,8 @@ public class DBConnectionManager {
     static {
         HikariConfig hikariConfig = new HikariConfig();
 
-        hikariConfig.setJdbcUrl("jdbc:sqlite::resource::currency_exchange.db");
-        hikariConfig.setDriverClassName("com.swnur.JDBC");
+        hikariConfig.setJdbcUrl("jdbc:sqlite::resource:currency_exchange.db");
+        hikariConfig.setDriverClassName("org.sqlite.JDBC");
 
         DATA_SOURCE = new HikariDataSource(hikariConfig);
     }
