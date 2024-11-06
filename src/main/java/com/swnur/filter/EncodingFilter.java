@@ -9,7 +9,9 @@ import jakarta.servlet.http.HttpFilter;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter(value = {
+        "/currencies", "/currency/*", "/exchangeRate/*", "/exchangeRates", "/exchange"
+})
 public class EncodingFilter extends HttpFilter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
