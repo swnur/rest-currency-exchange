@@ -1,4 +1,4 @@
-package com.swnur;
+package com.swnur.utils;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

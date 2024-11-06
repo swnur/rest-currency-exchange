@@ -1,6 +1,6 @@
 package com.swnur.dao;
 
-import com.swnur.DBConnectionManager;
+import com.swnur.utils.DBConnectionManager;
 import com.swnur.entity.Currency;
 import com.swnur.exception.DBOperationException;
 import com.swnur.exception.EntityExistsException;
