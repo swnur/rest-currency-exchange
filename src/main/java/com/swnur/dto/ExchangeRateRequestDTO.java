@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExchangeRequestDTO {
+public class ExchangeRateRequestDTO {
 
     private String baseCurrencyCode;
 
