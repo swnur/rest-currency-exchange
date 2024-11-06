@@ -30,11 +30,11 @@ public class CurrenciesControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Currency> currencies = currencyDao.findAll();
 
-        List<CurrencyResponseDTO> currenciesDto = currencies.stream()
+        List<CurrencyResponseDTO> currencyDTOList = currencies.stream()
                 .map(MappingUtils::convertToDTO)
                 .collect(Collectors.toList());
 
-        objectMapper.writeValue(resp.getWriter(), currenciesDto);
+        objectMapper.writeValue(resp.getWriter(), currencyDTOList);
     }
 
     @Override
@@ -42,8 +42,6 @@ public class CurrenciesControllerServlet extends HttpServlet {
         String code = req.getParameter("code");
         String name = req.getParameter("name");
         String sign = req.getParameter("sign");
-
-        System.out.println(name + " " + code + " " + sign);
 
         CurrencyRequestDTO currencyRequestDto = new CurrencyRequestDTO(code, name, sign);
 

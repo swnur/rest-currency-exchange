@@ -2,7 +2,9 @@ package com.swnur.utils;
 
 import com.swnur.dto.CurrencyRequestDTO;
 import com.swnur.dto.CurrencyResponseDTO;
+import com.swnur.dto.ExchangeRateResponseDTO;
 import com.swnur.entity.Currency;
+import com.swnur.entity.ExchangeRate;
 import org.modelmapper.ModelMapper;
 
 public class MappingUtils {
@@ -21,5 +23,9 @@ public class MappingUtils {
 
     public static CurrencyResponseDTO convertToDTO(Currency currency) {
         return MODEL_MAPPER.map(currency, CurrencyResponseDTO.class);
+    }
+
+    public static ExchangeRateResponseDTO convertToDTO(ExchangeRate exchangeRate) {
+        return MODEL_MAPPER.map(exchangeRate, ExchangeRateResponseDTO.class);
     }
 }
